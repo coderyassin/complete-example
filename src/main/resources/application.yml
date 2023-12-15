@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.120.17:5432/first_system_ds
+    username: yascode
+    password: YassMel97
+#  h2:
+#    console:
+#      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  rabbitmq:
+    host: 192.168.120.17
+    port: 5672
+    username: guest
+    password: guest
+    batch:
+      jdbc:
+        initialize-schema: always
+
+
+  sql:
+    init:
+      schema-locations: classpath:sql/schema-h2.sql
