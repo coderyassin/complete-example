@@ -3,7 +3,6 @@ package org.yascode.firstsystem.batch;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.stereotype.Component;
 import org.yascode.firstsystem.config.RabbitMQConfig;
 import org.yascode.firstsystem.config.RabbitMQProducer;
