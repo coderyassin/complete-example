@@ -9,6 +9,7 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,7 @@ public class BatchConfiguration {
     private PlatformTransactionManager transactionManager;
     private final CsvFileReader csvFileReader;
     private final JdbcCursorItemReader<ApplicationCsv> dbItemReader;
+    private final JdbcPagingItemReader<ApplicationCsv> applicationJdbcPagingItemReader;
     private ApplicationItemProcessor<ApplicationCsv, Application> applicationItemProcessor;
 
     private ApplicationItemWriter applicationItemWriter;
@@ -35,12 +37,14 @@ public class BatchConfiguration {
                               JobRepository jobRepository,
                               CsvFileReader csvFileReader,
                               JdbcCursorItemReader<ApplicationCsv> dbItemReader,
+                              JdbcPagingItemReader<ApplicationCsv> applicationJdbcPagingItemReader,
                               ApplicationItemProcessor<ApplicationCsv, Application> applicationItemProcessor,
                               ApplicationItemWriter applicationItemWriter) {
         this.transactionManager = transactionManager;
         this.jobRepository = jobRepository;
         this.csvFileReader = csvFileReader;
         this.dbItemReader = dbItemReader;
+        this.applicationJdbcPagingItemReader = applicationJdbcPagingItemReader;
         this.applicationItemProcessor = applicationItemProcessor;
         this.applicationItemWriter = applicationItemWriter;
     }
@@ -71,7 +75,7 @@ public class BatchConfiguration {
     public Step step1() {
         return new StepBuilder("step1", jobRepository)
                 .<ApplicationCsv, Application>chunk(10, transactionManager)
-                .reader(dbItemReader)
+                .reader(applicationJdbcPagingItemReader)
                 .processor(applicationItemProcessor)
                 .writer(applicationItemWriter)
                 .build();

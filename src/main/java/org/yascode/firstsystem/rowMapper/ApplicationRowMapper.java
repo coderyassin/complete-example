@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ApplicationRowMapper implements RowMapper<ApplicationCsv> {
-    public static final String ID_COLUMN = "id";
-    public static final String CODE_COLUMN = "code";
-    public static final String NAME_COLUMN = "name";
+    public static final String ID_COLUMN = "ID";
+    public static final String CODE_COLUMN = "CODE";
+    public static final String NAME_COLUMN = "NAME";
     @Override
     public ApplicationCsv mapRow(ResultSet rs, int rowNum) throws SQLException {
         return ApplicationCsv.builder()

@@ -11,6 +11,7 @@ public class ApplicationItemProcessor<A, B> implements ItemProcessor<A, B> {
     public B process(A item) throws Exception {
         ApplicationCsv applicationCsv = (ApplicationCsv) item;
         Application application = Application.builder()
+                .id(applicationCsv.getId())
                 .code(applicationCsv.getCode())
                 .name(applicationCsv.getName())
                 .build();
